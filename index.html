@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-Shirt Store</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: url("img.PNG") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      min-height: 100vh;
+    }
+
+    header {
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .products {
+      max-width: 1100px;
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .price {
+      font-size: 20px;
+      color: #e63946;
+      margin: 10px 0;
+    }
+
+    .delivery {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .coupon-box {
+      margin-bottom: 15px;
+    }
+
+    .coupon-box input {
+      padding: 8px;
+      width: 70%;
+    }
+
+    .coupon-box button {
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    .final-price {
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: green;
+    }
+
+    .buy-btn {
+      background: #1d3557;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .buy-btn:hover {
+      background: #457b9d;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay">
+
+  <header>
+    <h1>T-Shirt Store</h1>
+    <p>Base Price: ৳ 500 | Delivery (COD): ৳ 150</p>
+    <p>Coupon Codes: <b>SAVE10</b> (10% Off), <b>FREEDEL</b> (Free Delivery)</p>
+  </header>
+
+  <div class="products">
+
+    <!-- Product 1 -->
+    <div class="card">
+      <img src="https://assets0.mirraw.com/images/101174/f16f7698ae7fd6b740004f6ee732626c_zoom.jpg">
+      <h3>Black Classic T-Shirt</h3>
+      <div class="price">Price: ৳ 500</div>
+      <div class="delivery">Delivery: ৳ 150</div>
+
+      <div class="coupon-box">
+        <input type="text" id="coupon1" placeholder="Enter coupon code">
+        <button onclick="applyCoupon(1)">Apply</button>
+      </div>
+
+      <div class="final-price" id="final1">Total: ৳ 650</div>
+
+      <button class="buy-btn" onclick="buyNow('Black Classic T-Shirt', 1)">Buy Now</button>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="card">
+      <img src="https://s.alicdn.com/@sc04/kf/Hd6cceefa18884dae9f9e47c16625be4bo/High-Street-Rock-Band-Print-T-Shirt-250-Gsm-Wash-T-Shirt-Aged-100-Cotton-T-shirt-Digital-Printing-T-shirt.jpg">
+      <h3>White Casual T-Shirt</h3>
+      <div class="price">Price: ৳ 500</div>
+      <div class="delivery">Delivery: ৳ 150</div>
+
+      <div class="coupon-box">
+        <input type="text" id="coupon2" placeholder="Enter coupon code">
+        <button onclick="applyCoupon(2)">Apply</button>
+      </div>
+
+      <div class="final-price" id="final2">Total: ৳ 650</div>
+
+      <button class="buy-btn" onclick="buyNow('White Casual T-Shirt', 2)">Buy Now</button>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="card">
+      <img src="https://rukminim2.flixcart.com/image/300/300/xif0q/t-shirt/4/u/k/l-green-moster-radium-original-imahckx5pptjwaha.jpeg">
+      <h3>Blue Modern T-Shirt</h3>
+      <div class="price">Price: ৳ 500</div>
+      <div class="delivery">Delivery: ৳ 150</div>
+
+      <div class="coupon-box">
+        <input type="text" id="coupon3" placeholder="Enter coupon code">
+        <button onclick="applyCoupon(3)">Apply</button>
+      </div>
+
+      <div class="final-price" id="final3">Total: ৳ 650</div>
+
+      <button class="buy-btn" onclick="buyNow('Blue Modern T-Shirt', 3)">Buy Now</button>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>© 2026 T-Shirt Store</p>
+  </footer>
+
+</div>
+
+<script>
+  const basePrice = 500;
+  const baseDelivery = 150;
+
+  let finalTotals = {1: 650, 2: 650, 3: 650};
+
+  function applyCoupon(id) {
+    const code = document.getElementById("coupon" + id).value.trim().toUpperCase();
+
+    let price = basePrice;
+    let delivery = baseDelivery;
+
+    if (code === "SAVE10") {
+      price = price - (price * 0.10);
+    } else if (code === "FREEDEL") {
+      delivery = 0;
+    } else if (code !== "") {
+      alert("Invalid coupon code");
+    }
+
+    const total = Math.round(price + delivery);
+    finalTotals[id] = total;
+
+    document.getElementById("final" + id).innerText = "Total: ৳ " + total;
+  }
+
+  function buyNow(productName, id) {
+    // এখানে তোমার আসল n8n form link বসাবে
+    const n8nLink = "https://faltun8n.app.n8n.cloud/form/8d54d4c9-f4c3-4ae6-8204-cec3543bab1c";
+
+    const finalPrice = finalTotals[id];
+
+    const finalLink = n8nLink + "?product=" + encodeURIComponent(productName) + "&total=" + finalPrice;
+
+    window.location.href = finalLink;
+  }
+</script>
+
+</body>
+</html>
